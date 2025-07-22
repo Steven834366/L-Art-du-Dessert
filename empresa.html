@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>L'Art du Dessert</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Open+Sans&display=swap" rel="stylesheet" />
+<style>
+  body {
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+    background: url('https://cdn.pixabay.com/photo/2016/11/29/04/00/food-1869598_1280.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #5c3b2e;
+  }
+  header {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    text-align: center;
+  }
+  header img {
+    max-height: 130px;
+  }
+  nav {
+    background-color: #d7a98c;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    gap: 20px;
+  }
+  nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  nav a:hover {
+    text-decoration: underline;
+  }
+  .section {
+    background-color: rgba(255, 255, 255, 0.93);
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 1000px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+  .section h2 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.5em;
+    text-align: center;
+  }
+  .desserts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+  .dessert {
+    width: 250px;
+    background-color: #fff4ec;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+    cursor: pointer;
+  }
+  .dessert:hover {
+    transform: scale(1.05);
+  }
+  .dessert img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+  .dessert p {
+    text-align: center;
+    padding: 10px;
+    font-weight: bold;
+  }
+  footer {
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+  }
+  .socials a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #5c3b2e;
+  }
+
+  /* Modal */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    justify-content: center;
+    align-items: center;
+  }
+  .modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    max-width: 600px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+  }
+  .close {
+    position: absolute;
+    top: 10px; right: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  /* Carousel inside modal */
+  .carousel {
+    position: relative;
+    margin-top: 15px;
+  }
+  .carousel img {
+    width: 100%;
+    max-height: 320px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  .carousel button {
+    position: absolute;
+    top: 50%;
+    background: rgba(92,59,46,0.6);
+    border: none;
+    color: white;
+    font-size: 30px;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    user-select: none;
+    transform: translateY(-50%);
+  }
+  .carousel button:hover {
+    background: rgba(92,59,46,0.9);
+  }
+  .carousel .prev {
+    left: 10px;
+  }
+  .carousel .next {
+    right: 10px;
+  }
+
+  /* Description text */
+  #modalDescription {
+    margin-top: 10px;
+    font-weight: 600;
+  }
+
+  #modalPrice {
+    margin-top: 8px;
+    font-weight: bold;
+    color: #7a4b2c;
+  }
+
+  /* Estilos para la sección contacto con brillo y personalidad en rosadito claro */
+  #contacto {
+    background: linear-gradient(135deg, #f9d5e5, #fbc4d4);
+    color: #7a3b4a !important;
+    box-shadow: 0 0 15px #f9a5bd;
+  }
+
+  .socials {
+    font-size: 1.2em;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .social-link {
+    color: #7a3b4a;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 25px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 0 8px rgba(249,165,189,0.7);
+    transition: all 0.3s ease;
+    margin: 0 5px;
+  }
+
+  .social-link:hover {
+    background: rgba(249,165,189,0.3);
+    box-shadow: 0 0 20px #f9a5bd, 0 0 30px #f9a5bd;
+    text-decoration: none;
+    color: #fc4a1a;
+    transform: scale(1.1);
+  }
+
+  .social-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <img src="https://scontent.fsap16-2.fna.fbcdn.net/v/t39.30808-6/510738963_122102415074920584_746663826381157387_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeH99f8CkiyJcjJ-sfdmTxT1ae2weW4oLBRp7bB5bigsFIFeMruL-9aJkfZTD5BYM2Ai6vXjv2EidpEHkOFzungM&_nc_ohc=Z0yTkbseJ-4Q7kNvwEwq6YT&_nc_oc=AdlUt9Aq9Fh4Dpw-robezhf7PoQ9qLmxIjHOtUHLStmYHRLNMd9gKOYhmEgTt7nh2F20-gThMtwPnrCykHoCWIxB&_nc_zt=23&_nc_ht=scontent.fsap16-2.fna&_nc_gid=hX5-cK1T5JbUvrw21Lxe0w&oh=00_AfTDyNxSbJ6_nZQATaYNBHUiGhijADIhpc4GU1hEqdJUbg&oe=6884D37E" alt="Logo L'Art du Dessert" />
+  <h1>L'Art du Dessert</h1>
+  <p>Arte Para Tu Paladar...</p>
+</header>
+
+<nav>
+  <a href="#sobre-nosotros">Sobre Nosotros</a>
+  <a href="#nuestros-postres">Nuestros Postres</a>
+  <a href="#contacto">Contáctenos</a>
+</nav>
+
+<section class="section" id="sobre-nosotros">
+  <h2>Sobre Nosotros</h2>
+  <p>Somos una pastelería artesanal que combina arte y sabor para crear experiencias únicas. Elaboramos cada postre con dedicación, usando ingredientes de alta calidad y mucha pasión.</p>
+</section>
+
+<section class="section" id="nuestros-postres">
+  <h2>Nuestros Postres</h2>
+  <div class="desserts">
+    <div class="dessert" onclick="openModal('Roles de Canela', 'Opciones: Clásico, con nuez, con frosting de vainilla', [
+      'https://imag.bonviveur.com/cinnamon-rolls.jpg',
+      'https://sarasellos.com/wp-content/uploads/2024/05/cinnamon-rolls-rollos-canela-3-1024x1024.jpg',
+      'https://www.sortirambnens.com/wp-content/uploads/2020/03/pastis-de-canyella.png'
+    ], '40.00 Lps. ')">
+      <img src="https://imag.bonviveur.com/cinnamon-rolls.jpg" alt="Roles de canela" />
+      <p>Roles de Canela</p>
+    </div>
+
+    <div class="dessert" onclick="openModal('Tres Leches', 'Opciones: Tradicional, chocolate', [
+      'https://images.aws.nestle.recipes/resized/d4a70d146ddcd8f31e39c1f576d2e08f_bak---01---tres-leches-cake-586_1080_850.jpg',
+      'https://i.ytimg.com/vi/n0ymEFZJBho/maxresdefault.jpg',
+      'https://www.allrecipes.com/thmb/Cb0wYk4WlCtmxOIav1ZJuB9d5cE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/221907-Pastel-de-Tres-Leches_Melissa-Goff_5014610_original-4x3-1-1381d72b98a64f9b814e16e41575435a.jpg'
+    ], '55.00 Lps.')">
+      <img src="https://images.aws.nestle.recipes/resized/d4a70d146ddcd8f31e39c1f576d2e08f_bak---01---tres-leches-cake-586_1080_850.jpg" alt="Tres leches" />
+      <p>Pastel 3 Leches</p>
+    </div>
+
+    <div class="dessert" onclick="openModal('Alfajores', 'Opciones: Con dulce de leche, bañados en chocolate, coco', [
+  'https://hispanaglobal.com/wp-content/uploads/2022/03/Dulce-De-Leche-cookies-9-scaled.jpg',
+  'https://cdn.recetasderechupete.com/wp-content/uploads/2015/07/alfajores_maicena.jpg',
+  'https://prettysimplesweet.com/wp-content/uploads/2015/05/Alfajores-Dulce-de-Leche-Cookies.jpg'
+], '30.00 Lps.')">
+  <img src="https://recetasdecocina.elmundo.es/wp-content/uploads/2024/05/alfajores-1024x683.jpg" alt="Alfajores de maicena" />
+  <p>Alfajores</p>
+</div>
+
+
+    <div class="dessert" onclick="openModal('Flan', 'Opciones: Flan de vainilla, caramelo, queso, coco', [
+      'https://www.javirecetas.com/wp-content/uploads/2020/11/flan-de-queso.jpg',
+      'https://www.goya.com/wp-content/uploads/2023/10/flan-de-queso-caramel-topped-cream-cheese-custard.jpg',
+      'https://www.goodnes.com/sites/g/files/jgfbjl321/files/srh_recipes/85a50b1217febe5b2132cac0232587ca.jpg'
+    ], '35.00 Lps')">
+      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgyTTVQ11FrjPyKMYZ7HY1mQQShZdOXzoDfttyJOla1IUs2wAEGKpC1fwgYbdJZ0TyTQpnd1Z5EhrghK2qFYV5kMP8uAyMLlKH5scZ7hmLZdZTxs9zVZXGxmjHuwCLvVqKxRzohrMdtoQKB954uPS5cRHGn0YzivT-zVGgBd3Yb84ShWyf-kamr_6sb-Q/s1600/flan-queso-crema.JPG" alt="Flan" />
+      <p>Flan</p>
+    </div>
+
+    <div class="dessert" onclick="openModal('Conitos', 'Opciones: Rellenos con dulce de leche, cubiertos de chocolate amargo, blanco', [
+      'https://www.cucinare.tv/wp-content/uploads/2017/12/Conitos-rellenos-de-dulce-de-leche-1.jpg',
+      'https://espiaenlacocina.com/wp-content/uploads/2015/10/Conos-de-hojaldre-rellenos-de-crema-pastelera-2.jpg',
+      'https://www.recetassinlactosa.com/wp-content/uploads/2013/08/conos-de-hojaldre-rellenos-de-crema.jpg'
+    ], '12.00 Lps')">
+      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiiz1gIs1IU8pBirJtxz9vW3wmfZLNxOHcLqwqmXybD_vTGlr7kEsxR1MK4M0O8Wws0Ov5_pLauxpC4G6cSYciU6Pc9TEiYTOun8a-ERotQvZFvlmhPYJBULziAwlEseFAK6-cqV8cZvBHJ/s1600/K20.jpg" alt="Conitos" />
+      <p>Conitos</p>
+    </div>
+
+    <div class="dessert" onclick="openModal('Cupcakes', 'Opciones: Vainilla, chocolate, red velvet, rellenos de fresa o crema', [
+      'https://sallysbakingaddiction.com/wp-content/uploads/2017/06/moist-chocolate-cupcakes-5.jpg',
+      'https://sugargeekshow.com/wp-content/uploads/2022/08/vanilla_cupcake_featured_blog.jpg',
+      'https://eggs.ca/wp-content/uploads/2024/06/cupcake-with-sprinkles-1664x832-1.jpg'
+    ], '25.00 Lps')">
+      <img src="https://ichef.bbci.co.uk/food/ic/food_16x9_1600/recipes/cupcakes_93722_16x9.jpg" alt="Cupcakes" />
+      <p>Cupcakes</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="contacto">
+  <h2>Contáctenos</h2>
+  <p class="socials">
+    <a href="https://www.facebook.com/profile.php?id=61577617534966" target="_blank" class="social-link">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1024px-Facebook_Logo_%282019%29.png" alt="Facebook" class="social-icon" />
+      Facebook
+    </a> |
+    <a href="https://www.instagram.com/lart_dudessert?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="social-link">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/5/58/Instagram-Icon.png" alt="Instagram" class="social-icon" />
+      Instagram
+    </a> |
+    <a href="https://wa.me/50412345678" target="_blank" class="social-link">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/2044px-WhatsApp.svg.png" alt="WhatsApp" class="social-icon" />
+      WhatsApp
+    </a>
+  </p>
+</section>
+
+<footer>
+  &copy; 2025 L'Art du Dessert. Todos los derechos reservados.
+</footer>
+
+<!-- MODAL -->
+<div class="modal" id="dessertModal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2 id="modalTitle"></h2>
+    <p id="modalDescription"></p>
+    <p id="modalPrice"></p>
+
+    <div class="carousel">
+      <button class="prev" onclick="prevImage()">&#10094;</button>
+      <img id="carouselImage" src="" alt="Imagen del postre" />
+      <button class="next" onclick="nextImage()">&#10095;</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let currentImages = [];
+  let currentIndex = 0;
+
+  function openModal(title, description, images, price) {
+    document.getElementById('modalTitle').textContent = title;
+    document.getElementById('modalDescription').textContent = description;
+    document.getElementById('modalPrice').textContent = `Precio: ${price}`;
+    currentImages = images;
+    currentIndex = 0;
+    document.getElementById('carouselImage').src = currentImages[currentIndex];
+    document.getElementById('dessertModal').style.display = 'flex';
+  }
+
+  function closeModal() {
+    document.getElementById('dessertModal').style.display = 'none';
+    currentImages = [];
+    currentIndex = 0;
+  }
+
+  function prevImage() {
+    if (currentImages.length === 0) return;
+    currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+    document.getElementById('carouselImage').src = currentImages[currentIndex];
+  }
+
+  function nextImage() {
+    if (currentImages.length === 0) return;
+    currentIndex = (currentIndex + 1) % currentImages.length;
+    document.getElementById('carouselImage').src = currentImages[currentIndex];
+  }
+
+  window.onclick = function(event) {
+    const modal = document.getElementById('dessertModal');
+    if (event.target === modal) {
+      closeModal();
+    }
+  }
+</script>
+
+</body>
+</html>
